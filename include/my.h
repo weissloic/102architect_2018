@@ -47,28 +47,36 @@ int my_showmem(char const * , int );
 char *my_strcat(char *, char const *);
 char *my_strncat(char *, char const * , int );
 int my_show_word_array(char *const *);
+
 int calc_convert_tobase(int , char *);
 long calc_pointer(long , char *);
+
 void my_putfloat(double , int );
 void my_putunsignd(long );
 void my_big_s(unsigned char *);
+
 void my_printf(char *, ...);
+
 void check_error(int , int , char *, va_list );
+
 void display_octo(va_list );
 void display_bin(va_list );
 void display_hexa_up(va_list );
 void display_hexa_low(va_list );
+
 void display_pointer(va_list );
 void display_str(va_list );
 void display_char(va_list );
 void display_int(va_list );
+
 void print_base(va_list );
-void display_hexa(va_list );
+
 void display_float(va_list );
 void display_strbis(va_list );
 void display_percent(va_list );
 void display_unsigned(va_list );
 void error_big_s(unsigned char );
+
 static void(*pt_fct[18])(va_list) = {
     &display_int,
     &display_int,
