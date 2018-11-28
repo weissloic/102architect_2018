@@ -13,6 +13,8 @@ typedef struct point {
     float y;
 } point_t;
 
+void print_matrix(double **matrix);
+
 void translation(point_t point1, point_t point2, double **matrix)
 {
     point_t result;
@@ -55,11 +57,36 @@ void print_matrix(double **matrix)
     }
 }
 
-void calc_matrice(point_t point1, point_t point2, double **matrix)
+double **calc_matrice(point_t point1, point_t point2, double **matrix)
 {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             matrix[i][j] = 0.00;
+        }
+    }
+    return (matrix);
+}
+
+void my_get_arg(int ac, char **av, double **matrix, point_t point1, point_t point2)
+{
+    for (int i = 0; i != ac; i++) {
+        if (strcmp(av[i], "-t") == 0) {
+            point1.x = atof(av[i - 2]);
+            point1.y = atof(av[i - 1]);
+            point2.x = atof(av[i + 1]);
+            point2.y = atof(av[i + 2]);
+            translation(point1, point2, matrix);
+        }
+        else if (strcmp(av[i], "-r") == 0) {
+        }
+        else if (strcmp(av[i], "-z") == 0) {
+            point1.x = atof(av[i - 2]);
+            point1.y = atof(av[i - 1]);
+            point2.x = atof(av[i + 1]);
+            point2.y = atof(av[i + 2]);
+            scaling(point1, point2, matrix);
+        }
+        else if (strcmp(av[i], "-s") == 0) {
         }
     }
 }
@@ -69,20 +96,11 @@ int main(int ac, char **av)
     point_t point1;
     point_t point2;
     char *option;
+    char *option2;
     double **matrix = malloc(sizeof(double *) * 3);
     for (int i = 0; i < 3; i++)
         matrix[i] = malloc(sizeof(double) * 3);
-
-    point1.x = atof(av[1]);
-    point1.y = atof(av[2]);
-
-    point2.x = atof(av[4]);
-    point2.y = atof(av[5]);
-
-    option = av[3];
-
-    translation(point1, point2);
     calc_matrice(point1, point2, matrix);
-    print_matrix(matrix);
+    my_get_arg(ac, av, matrix, point1, point2);
     return (0);
 }
