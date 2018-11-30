@@ -57,7 +57,7 @@ void rotation(double **matrix, double angle)
     matrix[1][0] = sin(angle);
     matrix[1][1] = cos(angle);
     matrix[2][2] = 1;
-    printf("Rotation by a %.0f degree angle\n", angle);
+    printf("Rotation by a %.0f degree angle\n", angle * 180 / M_PI);
     print_matrix(matrix);
 
 }
