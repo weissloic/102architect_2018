@@ -19,7 +19,7 @@ void translation(point_t point1, point_t point2, double **matrix)
 {
     point_t result;
 
-    matrix[0][0] = 1.00;
+    matrix[0][0] =  matrix[0][0] + 1.00;
     matrix[2][2] = 1.00;
     matrix[1][1] = 1.00;
     matrix[0][2] = point2.x;
