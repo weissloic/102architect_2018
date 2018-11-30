@@ -7,6 +7,7 @@
 
 #include "include/my.h"
 #include <string.h>
+#include <math.h>
 
 typedef struct point {
     float x;
@@ -51,7 +52,7 @@ void scaling(point_t point1, point_t point2, double **matrix, double **rslt)
 
 void rotation(double **matrix, double angle)
 {
-    matrix[0][0] = -cos(angle);
+    matrix[0][0] = cos(angle);
     matrix[0][1] = -sin(angle);
     matrix[1][0] = sin(angle);
     matrix[1][1] = cos(angle);
@@ -92,6 +93,7 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
             translation(point1, point2, matrix, rslt);
         } else if (strcmp(av[i], "-r") == 0) {
             double angle = atoi(av[i + 1]);
+            angle = angle * (M_PI /180);
             rotation(matrix, angle);
         } else if (strcmp(av[i], "-z") == 0) {
             point1.x = atof(av[i - 2]);
