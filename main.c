@@ -7,6 +7,7 @@
 
 #include "include/my.h"
 #include <string.h>
+#include <ctype.h>
 #include <math.h>
 
 typedef struct point {
@@ -50,7 +51,7 @@ void scaling(point_t point1, point_t point2, double **matrix, double **rslt)
     printf("(%.0f, %.0f) => (%.2f, %.2f)\n", point1.x, point1.y, result.x, result.y);
 }
 
-void rotation(double **matrix, double angle)
+void rotation(point_t point1, point_t point2, double **matrix, double angle)
 {
     matrix[0][0] = cos(angle);
     matrix[0][1] = -sin(angle);
@@ -59,7 +60,7 @@ void rotation(double **matrix, double angle)
     matrix[2][2] = 1;
     printf("Rotation by a %.0f degree angle\n", angle * 180 / M_PI);
     print_matrix(matrix);
-
+    printf("(%.0f, %.0f) => (%.2f, %.2f)\n", point1.x, point1.y, point1.y, point1.x);
 }
 
 void print_matrix(double **matrix)
@@ -83,6 +84,18 @@ double **init_matrice(double **matrix)
     return (matrix);
 }
 
+void reflexion(point_t point1, point_t point2, double **matrix, double angle)
+{
+    matrix[0][0] = (cos(2 * angle));
+    matrix[0][1] = (sin(2 * angle));
+    matrix[1][0] = (sin(2 * angle));
+    matrix[1][1] = (-cos(2 * angle));
+    matrix[2][2] = 1;
+    printf("Reflection over an axis with an inclination angle of %.0f degrees\n", angle* 180 / M_PI);
+    print_matrix(matrix);
+    printf("(%.0f, %.0f) => (%.2f, %.2f)\n", point1.x, point1.y, point1.x * point1.y, point1.y);
+}
+
 /*double **mult_matrice(double **matrix1, double **matrix2, **rslt)
 {
     rslt[0][0] = matrix[0][0] * matrix2[0][0] + matrix[1][0] * rslt[0][1];
@@ -102,9 +115,11 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
             point2.y = atof(av[i + 2]);
             translation(point1, point2, matrix, rslt);
         } else if (strcmp(av[i], "-r") == 0) {
+            point1.y = atof(av[i - 1]);
+            point1.x = atof(av[i - 2]);
             double angle = atoi(av[i + 1]);
             angle = angle * (M_PI /180);
-            rotation(matrix, angle);
+            rotation(point1, point2, matrix, angle);
         } else if (strcmp(av[i], "-z") == 0) {
             point1.x = atof(av[i - 2]);
             point1.y = atof(av[i - 1]);
@@ -112,13 +127,20 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
             point2.y = atof(av[i + 2]);
             scaling(point1, point2, matrix, rslt);
         } else if (strcmp(av[i], "-s") == 0) {
-
+            point1.y = atof(av[i - 1]);
+            point1.x = atof(av[i - 2]);
+            double angle = atoi(av[i + 1]);
+            angle = angle * (M_PI /180);
+            reflexion(point1, point2, matrix, angle);
         }
     }
 }
 
 int main(int ac, char **av)
 {
+    if (ac < 4)
+        exit (84);
+
     point_t point1;
     point_t point2;
     double **matrix1 = malloc(sizeof(double *) * 3);
