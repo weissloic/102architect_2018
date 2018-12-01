@@ -66,7 +66,9 @@ void print_matrix(double **matrix)
 {
     for (int i = 0; i != 3; i++) {
         for (int j = 0; j != 3; j++) {
-            printf("%.2f\t", matrix[i][j]);
+            printf("%.2f", matrix[i][j]);
+            if (j != 2)
+                printf("\t");
         }
         printf("\n");
     }
@@ -75,12 +77,20 @@ void print_matrix(double **matrix)
 double **init_matrice(double **matrix)
 {
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 3; j++)
             matrix[i][j] = 0.00;
-        }
     }
     return (matrix);
 }
+
+/*double **mult_matrice(double **matrix1, double **matrix2, **rslt)
+{
+    rslt[0][0] = matrix[0][0] * matrix2[0][0] + matrix[1][0] * rslt[0][1];
+    rslt[0][1] = matrix[1][0] * rslt[0][1];
+    rslt[0][2] = matrix[1][0] * rslt[0][1];
+
+    rslt[1][0] = matrix[][] * rslt[][];
+}*/
 
 void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point1, point_t point2)
 {
@@ -111,14 +121,18 @@ int main(int ac, char **av)
 {
     point_t point1;
     point_t point2;
-    double **matrix = malloc(sizeof(double *) * 3);
+    double **matrix1 = malloc(sizeof(double *) * 3);
+    double **matrix2 = malloc(sizeof(double *) * 3);
     double **rslt = malloc(sizeof(double *) * 3);
     for (int i = 0; i < 3; i++) {
-        matrix[i] = malloc(sizeof(double) * 3);
+        matrix1[i] = malloc(sizeof(double) * 3);
+        matrix2[i] = malloc(sizeof(double) * 3);
         rslt[i] = malloc(sizeof(double) * 3);
     }
     init_matrice(rslt);
-    init_matrice(matrix);
-    my_get_arg(ac, av, matrix, rslt, point1, point2);
+    init_matrice(matrix1);
+    init_matrice(matrix2);
+
+    my_get_arg(ac, av, matrix1, rslt, point1, point2);
     return (0);
 }
