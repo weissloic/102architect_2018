@@ -51,7 +51,7 @@ void scaling(point_t point1, point_t point2, double **matrix, double **rslt)
     printf("(%.0f, %.0f) => (%.2f, %.2f)\n", point1.x, point1.y, result.x, result.y);
 }
 
-void rotation(point_t point1, point_t point2, double **matrix, double angle)
+void rotation(point_t point1, double **matrix, double angle)
 {
     matrix[0][0] = cos(angle);
     matrix[0][1] = -sin(angle);
@@ -84,7 +84,7 @@ double **init_matrice(double **matrix)
     return (matrix);
 }
 
-void reflexion(point_t point1, point_t point2, double **matrix, double angle)
+void reflexion(point_t point1, double **matrix, double angle)
 {
     matrix[0][0] = (cos(2 * angle));
     matrix[0][1] = (sin(2 * angle));
@@ -119,7 +119,7 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
             point1.x = atof(av[i - 2]);
             double angle = atoi(av[i + 1]);
             angle = angle * (M_PI /180);
-            rotation(point1, point2, matrix, angle);
+            rotation(point1, matrix, angle);
         } else if (strcmp(av[i], "-z") == 0) {
             point1.x = atof(av[i - 2]);
             point1.y = atof(av[i - 1]);
@@ -131,7 +131,7 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
             point1.x = atof(av[i - 2]);
             double angle = atoi(av[i + 1]);
             angle = angle * (M_PI /180);
-            reflexion(point1, point2, matrix, angle);
+            reflexion(point1, matrix, angle);
         }
     }
 }
@@ -139,10 +139,10 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
 int main(int ac, char **av)
 {
     if (ac < 4)
-        exit (84);
+        return (84);
 
-    point_t point1;
-    point_t point2;
+    point_t point1 = {0, 0};
+    point_t point2 = {0, 0};;
     double **matrix1 = malloc(sizeof(double *) * 3);
     double **matrix2 = malloc(sizeof(double *) * 3);
     double **rslt = malloc(sizeof(double *) * 3);
