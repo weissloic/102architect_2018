@@ -96,15 +96,6 @@ void reflexion(point_t point1, double **matrix, double angle)
     printf("(%.0f, %.0f) => (%.2f, %.2f)\n", point1.x, point1.y, point1.x * point1.y, point1.y);
 }
 
-/*double **mult_matrice(double **matrix1, double **matrix2, **rslt)
-{
-    rslt[0][0] = matrix[0][0] * matrix2[0][0] + matrix[1][0] * rslt[0][1];
-    rslt[0][1] = matrix[1][0] * rslt[0][1];
-    rslt[0][2] = matrix[1][0] * rslt[0][1];
-
-    rslt[1][0] = matrix[][] * rslt[][];
-}*/
-
 void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point1, point_t point2)
 {
     for (int i = 0; i != ac; i++) {
@@ -138,9 +129,6 @@ void my_get_arg(int ac, char **av, double **matrix, double **rslt, point_t point
 
 int main(int ac, char **av)
 {
-    if (ac < 4)
-        return (84);
-
     point_t point1 = {0, 0};
     point_t point2 = {0, 0};;
     double **matrix1 = malloc(sizeof(double *) * 3);
